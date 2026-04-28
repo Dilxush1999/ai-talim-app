@@ -12,18 +12,9 @@
 
     <content src="index.html" />
 
-    <!-- Domain ruxsatlari -->
-    <allow-navigation href="https://talim.page.gd/*" />
-    <allow-navigation href="http://talim.page.gd/*" />
-    <allow-navigation href="https://*.page.gd/*" />
-    <allow-navigation href="http://*.page.gd/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
-
     <access origin="*" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
 
     <!-- Umumiy sozlamalar -->
     <preference name="Fullscreen" value="false" />
