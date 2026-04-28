@@ -1,0 +1,20 @@
+# Node
+node_modules/
+
+# Cordova platforms & plugins (re-installed in CI)
+platforms/
+plugins/
+
+# Build output
+output/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*

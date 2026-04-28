@@ -1,0 +1,506 @@
+/* ============================================
+   AI Ta'lim - Mobile App Styles
+   Modern, Premium Design
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f172a;
+    color: #fff;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ============================================
+   Background Animated Blobs
+   ============================================ */
+.bg-blobs {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: blobFloat 20s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 100%);
+    top: -15vw; left: -15vw;
+}
+
+.blob-2 {
+    width: 50vw; height: 50vw;
+    background: radial-gradient(circle, #8b5cf6 0%, #6d28d9 100%);
+    bottom: -10vw; right: -10vw;
+    animation-delay: -7s;
+}
+
+.blob-3 {
+    width: 35vw; height: 35vw;
+    background: radial-gradient(circle, #ec4899 0%, #be185d 100%);
+    top: 50%; left: 40%;
+    transform: translate(-50%, -50%);
+    animation-delay: -14s;
+}
+
+@keyframes blobFloat {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(3vw, -5vw) scale(1.1); }
+    66%  { transform: translate(-4vw, 3vw) scale(0.95); }
+    100% { transform: translate(2vw, 6vw) scale(1.05); }
+}
+
+/* ============================================
+   Screen Container (shared)
+   ============================================ */
+.screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 32px 24px;
+    text-align: center;
+    transition: opacity 0.4s ease;
+}
+
+.screen.active {
+    display: flex;
+}
+
+.screen.fade-out {
+    opacity: 0;
+}
+
+/* ============================================
+   Splash Screen
+   ============================================ */
+#splash-screen {
+    z-index: 200;
+    background: #0f172a;
+}
+
+.splash-logo-wrap {
+    position: relative;
+    margin-bottom: 32px;
+    animation: logoAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes logoAppear {
+    from { opacity: 0; transform: scale(0.7) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.splash-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 32px;
+    object-fit: cover;
+    box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.splash-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 160px; height: 160px;
+    transform: translate(-50%, -50%);
+    border-radius: 40px;
+    background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%);
+    animation: glowPulse 2s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes glowPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50%      { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+.splash-title {
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    animation: textFadeIn 0.6s 0.3s ease forwards;
+    opacity: 0;
+}
+
+.splash-subtitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748b;
+    margin-bottom: 48px;
+    animation: textFadeIn 0.6s 0.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes textFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading Dots */
+.loading-dots {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: textFadeIn 0.6s 0.7s ease forwards;
+    opacity: 0;
+}
+
+.loading-dots .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #3b82f6;
+    animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+.loading-dots .dot:nth-child(2) { animation-delay: 0.16s; background: #8b5cf6; }
+.loading-dots .dot:nth-child(3) { animation-delay: 0.32s; background: #ec4899; }
+
+@keyframes dotBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40%           { transform: scale(1.2); opacity: 1; }
+}
+
+.loading-text {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* ============================================
+   Error Screens (No Internet, 404, Connection Lost)
+   ============================================ */
+.error-screen {
+    background: #0f172a;
+}
+
+.error-icon-wrap {
+    position: relative;
+    margin-bottom: 32px;
+}
+
+.error-icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+    z-index: 1;
+}
+
+.error-icon.no-wifi {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+    border: 2px solid rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+.error-icon.not-found {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%);
+    border: 2px solid rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+}
+
+.error-icon.connection-lost {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(168, 85, 247, 0.05) 100%);
+    border: 2px solid rgba(168, 85, 247, 0.2);
+    color: #a855f7;
+}
+
+.error-icon-pulse {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+.no-wifi .error-icon-pulse { background: radial-gradient(circle, rgba(239,68,68,0.2) 0%, transparent 70%); }
+.not-found .error-icon-pulse { background: radial-gradient(circle, rgba(251,191,36,0.2) 0%, transparent 70%); }
+.connection-lost .error-icon-pulse { background: radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 70%); }
+
+@keyframes iconPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    50%      { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+}
+
+/* WiFi SVG Animation */
+.wifi-icon {
+    animation: wifiShake 3s ease-in-out infinite;
+}
+
+@keyframes wifiShake {
+    0%, 100% { transform: rotate(0deg); }
+    10%      { transform: rotate(-8deg); }
+    20%      { transform: rotate(8deg); }
+    30%      { transform: rotate(-5deg); }
+    40%      { transform: rotate(5deg); }
+    50%      { transform: rotate(0deg); }
+}
+
+.error-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+}
+
+.error-description {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.7;
+    max-width: 320px;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 36px;
+    border-radius: 18px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: 0.5s;
+}
+
+.btn:hover::after {
+    left: 100%;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #fff;
+    box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.5);
+}
+
+.btn-primary:active {
+    box-shadow: 0 5px 15px -5px rgba(59, 130, 246, 0.5);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.btn-spinner {
+    width: 20px; height: 20px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+}
+
+.btn-loading .btn-spinner {
+    display: inline-block;
+}
+
+.btn-loading .btn-text {
+    display: none;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   WebView Container
+   ============================================ */
+#webview-screen {
+    padding: 0;
+    z-index: 50;
+}
+
+#webframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #0f172a;
+}
+
+/* ============================================
+   Pull-to-Refresh Indicator
+   ============================================ */
+.pull-indicator {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(180deg, rgba(59,130,246,0.15) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 150;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+.pull-indicator.active {
+    height: 60px;
+}
+
+.pull-indicator .refresh-spinner {
+    width: 24px; height: 24px;
+    border: 3px solid rgba(59,130,246,0.3);
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+/* ============================================
+   Exit Dialog
+   ============================================ */
+.dialog-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dialog-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.dialog-card {
+    background: rgba(30, 41, 59, 0.98);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 28px;
+    padding: 32px 28px;
+    max-width: 340px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog-overlay.active .dialog-card {
+    transform: scale(1) translateY(0);
+}
+
+.dialog-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0.05) 100%);
+    border: 2px solid rgba(239,68,68,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+}
+
+.dialog-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin-bottom: 8px;
+}
+
+.dialog-text {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 28px;
+    line-height: 1.5;
+}
+
+.dialog-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.dialog-buttons .btn {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 14px;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #fff;
+    box-shadow: 0 8px 20px -5px rgba(239, 68, 68, 0.4);
+}
+
+/* ============================================
+   Status bar spacer
+   ============================================ */
+.status-bar-spacer {
+    height: env(safe-area-inset-top, 0px);
+    width: 100%;
+}

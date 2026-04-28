@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: blob: gap: ws: wss:; media-src *; img-src * data: blob:; font-src * data:;">
+    <title>AI Ta'lim</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ========== Background Blobs ========== -->
+    <div class="bg-blobs" id="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- ========================================
+         SPLASH SCREEN
+         ======================================== -->
+    <div id="splash-screen" class="screen active">
+        <div class="splash-logo-wrap">
+            <div class="splash-glow"></div>
+            <img src="img/logo.png" alt="AI Ta'lim" class="splash-logo" onerror="this.style.display='none'">
+        </div>
+        <h1 class="splash-title">AI Ta'lim</h1>
+        <p class="splash-subtitle">Zamonaviy onlayn ta'lim platformasi</p>
+        <div class="loading-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <span class="loading-text">Ma'lumotlar yuklanmoqda...</span>
+        </div>
+    </div>
+
+    <!-- ========================================
+         NO INTERNET SCREEN
+         ======================================== -->
+    <div id="no-internet-screen" class="screen error-screen">
+        <div class="error-icon-wrap">
+            <div class="error-icon-pulse" style="background: radial-gradient(circle, rgba(239,68,68,0.2) 0%, transparent 70%);"></div>
+            <div class="error-icon no-wifi">
+                <svg class="wifi-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                    <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+                    <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+                    <path d="M10.71 5.05A16 16 0 0 1 22.56 9"></path>
+                    <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                    <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                </svg>
+            </div>
+        </div>
+        <h2 class="error-title">Internet aloqasi mavjud emas</h2>
+        <p class="error-description">
+            Iltimos, Wi-Fi yoki mobil internet aloqangizni tekshiring va qayta urining.
+        </p>
+        <button class="btn btn-primary" onclick="retryConnection()">
+            <span class="btn-spinner"></span>
+            <span class="btn-text">🔄 Qayta urinish</span>
+        </button>
+    </div>
+
+    <!-- ========================================
+         NOT FOUND (404) SCREEN
+         ======================================== -->
+    <div id="not-found-screen" class="screen error-screen">
+        <div class="error-icon-wrap">
+            <div class="error-icon-pulse" style="background: radial-gradient(circle, rgba(251,191,36,0.2) 0%, transparent 70%);"></div>
+            <div class="error-icon not-found">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+            </div>
+        </div>
+        <h2 class="error-title">Sahifa topilmadi</h2>
+        <p class="error-description">
+            Siz qidirayotgan sahifa mavjud emas yoki o'chirilgan bo'lishi mumkin.
+        </p>
+        <button class="btn btn-primary" onclick="goBackFromError()" style="margin-bottom: 12px;">
+            <span class="btn-text">⬅ Ortga qaytish</span>
+        </button>
+        <button class="btn btn-secondary" onclick="retryConnection()">
+            <span class="btn-spinner"></span>
+            <span class="btn-text">🔄 Qayta urinish</span>
+        </button>
+    </div>
+
+    <!-- ========================================
+         CONNECTION LOST SCREEN
+         ======================================== -->
+    <div id="connection-lost-screen" class="screen error-screen">
+        <div class="error-icon-wrap">
+            <div class="error-icon-pulse" style="background: radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 70%);"></div>
+            <div class="error-icon connection-lost">
+                <svg class="wifi-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+            </div>
+        </div>
+        <h2 class="error-title">Aloqa uzildi</h2>
+        <p class="error-description">
+            Internet aloqasi uzildi. Iltimos, aloqangizni tekshiring va qayta urining.
+        </p>
+        <button class="btn btn-primary" onclick="retryFromConnectionLost()">
+            <span class="btn-spinner"></span>
+            <span class="btn-text">🔄 Qayta urinish</span>
+        </button>
+    </div>
+
+    <!-- ========================================
+         WEBVIEW SCREEN (iframe)
+         ======================================== -->
+    <div id="webview-screen" class="screen">
+        <!-- Pull-to-refresh zone -->
+        <div id="pull-zone" style="position:absolute;top:0;left:0;width:100%;height:40px;z-index:160;"></div>
+        
+        <!-- Pull indicator -->
+        <div id="pull-indicator" class="pull-indicator">
+            <div class="refresh-spinner"></div>
+        </div>
+
+        <!-- WebView iframe -->
+        <iframe 
+            id="webframe"
+            src="about:blank"
+            allow="camera *; microphone *; fullscreen *; autoplay *; geolocation *; clipboard-write *; clipboard-read *; display-capture *"
+            allowfullscreen
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads allow-modals allow-top-navigation"
+        ></iframe>
+    </div>
+
+    <!-- ========================================
+         EXIT DIALOG
+         ======================================== -->
+    <div id="exit-dialog" class="dialog-overlay">
+        <div class="dialog-card">
+            <div class="dialog-icon">👋</div>
+            <h3 class="dialog-title">Chiqishni xohlaysizmi?</h3>
+            <p class="dialog-text">Ilovadan chiqmoqchimisiz?</p>
+            <div class="dialog-buttons">
+                <button class="btn btn-secondary" onclick="hideExitDialog()">
+                    Yo'q
+                </button>
+                <button class="btn btn-danger" onclick="exitApp()">
+                    Ha, chiqish
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cordova JS -->
+    <script src="cordova.js"></script>
+    <!-- App JS -->
+    <script src="js/app.js"></script>
+
+</body>
+</html>
