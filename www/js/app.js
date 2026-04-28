@@ -1,5 +1,5 @@
 /**
- * AI Ta'lim - Android App Core Logic (Robust Version)
+ * AI Ta'lim - Android App Core Logic (Sequential Permissions)
  * ==========================================================
  */
 
@@ -7,7 +7,7 @@
     'use strict';
 
     const SITE_URL = 'https://talim.page.gd/login.php';
-    const SPLASH_MIN_DURATION = 2000;
+    const SPLASH_MIN_DURATION = 2500;
 
     document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -18,76 +18,49 @@
             navigator.splashscreen.hide();
         }
 
-        // Ruxsatlarni so'rashni boshlaymiz, lekin xato bo'lsa ham startApp-ni chaqiramiz
-        try {
-            requestPermissions(function() {
-                startApp();
-            });
-        } catch (e) {
-            console.error('Permission error:', e);
+        // Ruxsatlarni ketma-ket so'raymiz
+        requestAllPermissions(function() {
             startApp();
-        }
+        });
     }
 
-    function requestPermissions(callback) {
-        // Agar plaginlar bo'lmasa, o'tkazib yuboramiz
+    function requestAllPermissions(callback) {
         if (!window.plugins || !window.plugins.permissions) {
             callback();
             return;
         }
 
         var permissions = window.plugins.permissions;
-        var list = [
-            permissions.CAMERA,
-            permissions.RECORD_AUDIO
-        ];
-
-        // Android versiyasini tekshirishda xatolik bo'lmasligi uchun try-catch
-        try {
-            var platform = (window.device && window.device.platform) ? window.device.platform : '';
-            var version = (window.device && window.device.version) ? parseInt(window.device.version) : 0;
-
-            if (platform === 'Android' && version >= 13) {
-                list.push('android.permission.READ_MEDIA_IMAGES');
-                list.push('android.permission.READ_MEDIA_VIDEO');
-                list.push('android.permission.READ_MEDIA_AUDIO');
-            } else {
-                list.push(permissions.WRITE_EXTERNAL_STORAGE);
-                list.push(permissions.READ_EXTERNAL_STORAGE);
-            }
-        } catch (err) {
-            console.warn('Device info error:', err);
-        }
-
-        permissions.requestPermissions(list, function() {
-            callback();
-        }, function() {
-            callback();
-        });
+        
+        // 1. Kamera
+        permissions.requestPermission(permissions.CAMERA, function() {
+            // 2. Mikrofon
+            permissions.requestPermission(permissions.RECORD_AUDIO, function() {
+                // 3. Fayllar (Android versiyasiga qarab)
+                var filePermission = permissions.WRITE_EXTERNAL_STORAGE;
+                
+                try {
+                    if (window.device && parseInt(window.device.version) >= 13) {
+                        // Android 13+ da media ruxsatlari alohida
+                        permissions.requestPermission('android.permission.READ_MEDIA_IMAGES', callback, callback);
+                    } else {
+                        permissions.requestPermission(filePermission, callback, callback);
+                    }
+                } catch(e) {
+                    callback();
+                }
+            }, callback);
+        }, callback);
     }
 
     function startApp() {
         var startTime = Date.now();
-
-        // Internetni juda tez tekshiramiz
-        checkInternet(function(hasInternet) {
-            var elapsed = Date.now() - startTime;
-            var remaining = Math.max(0, SPLASH_MIN_DURATION - elapsed);
-
-            setTimeout(function() {
-                // Saytga yo'naltirish
-                window.location.href = SITE_URL;
-            }, remaining);
-        });
-    }
-
-    function checkInternet(callback) {
-        if (navigator.connection && navigator.connection.type === 'none') {
-            callback(false);
-            return;
-        }
-        // Shunchaki o'tkazib yuboramiz, sayt o'zi xato beradi agar internet bo'lmasa
-        callback(true);
+        
+        // Internet bormi yo'qmi, baribir saytga o'tamiz
+        // Chunki Redirect-dan so'ng WebView o'zi oflayn holatni boshqaradi
+        setTimeout(function() {
+            window.location.href = SITE_URL;
+        }, SPLASH_MIN_DURATION);
     }
 
     window.retryConnection = function() {

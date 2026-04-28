@@ -28,6 +28,7 @@
     <preference name="LoadUrlTimeoutValue" value="30000" />
     <preference name="AllowInlineMediaPlayback" value="true" />
     <preference name="MediaPlaybackRequiresUserAction" value="false" />
+    <preference name="PwaRefresh" value="true" />
 
     <!-- Android sozlamalari -->
     <platform name="android">
