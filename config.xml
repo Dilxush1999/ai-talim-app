@@ -41,9 +41,11 @@
         <preference name="android-minSdkVersion" value="24" />
         <preference name="android-targetSdkVersion" value="34" />
         <preference name="AndroidPersistentFileLocation" value="Internal" />
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/icon/android/xxxhdpi.png" />
+        <preference name="AndroidWindowSplashScreenBackground" value="#0f172a" />
+        <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#0f172a" />
         <preference name="StatusBarBackgroundColor" value="#0f172a" />
         <preference name="StatusBarStyle" value="lightcontent" />
-        <preference name="AndroidWindowSplashScreenBackground" value="#0f172a" />
 
         <!-- Ruxsatlar -->
         <config-file parent="/manifest" target="AndroidManifest.xml">

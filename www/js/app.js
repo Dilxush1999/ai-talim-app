@@ -105,7 +105,16 @@
         showScreen('splash');
         var startTime = Date.now();
 
+        // 10 soniyadan keyin agar hali ham splashda bo'lsa, baribir yuklashga urinib ko'rish
+        var safetyTimeout = setTimeout(function() {
+            if (currentScreen === 'splash') {
+                console.log('[Safety] Timeout reached, forcing load');
+                loadWebsite();
+            }
+        }, 8000);
+
         checkInternet(function(hasInternet) {
+            clearTimeout(safetyTimeout);
             var elapsed = Date.now() - startTime;
             var remaining = Math.max(0, SPLASH_MIN_DURATION - elapsed);
 
@@ -113,7 +122,8 @@
                 if (hasInternet) {
                     loadWebsite();
                 } else {
-                    showScreen('no-internet');
+                    // Agar oflayn bo'lsa ham bir marta yuklashga urinib ko'ramiz (keshdan o'qishi uchun)
+                    loadWebsite();
                 }
             }, remaining);
         });
@@ -122,50 +132,29 @@
     // ==================== INTERNET CHECK ====================
     
     function checkInternet(callback) {
-        // First check: navigator.onLine
-        if (!navigator.onLine) {
-            console.log('[Internet] navigator.onLine = false');
+        // Navigator orqali tezkor tekshirish
+        if (navigator.connection && navigator.connection.type === 'none') {
             callback(false);
             return;
         }
 
-        // Second check: try to reach the site
-        var controller = new AbortController();
-        var timeoutId = setTimeout(function() {
-            controller.abort();
-        }, INTERNET_CHECK_TIMEOUT);
+        // Saytni o'ziga ulanishni tekshirish
+        var img = new Image();
+        var timer = setTimeout(function() {
+            img.onload = null;
+            img.onerror = null;
+            callback(true); // Timeout bo'lsa ham "bor" deb hisoblaymiz, ilova ichida WebView o'zi xato beradi
+        }, 5000);
 
-        fetch(SITE_URL + '/favicon.ico?_=' + Date.now(), {
-            method: 'HEAD',
-            mode: 'no-cors',
-            cache: 'no-cache',
-            signal: controller.signal
-        })
-        .then(function() {
-            clearTimeout(timeoutId);
-            console.log('[Internet] Fetch success');
+        img.onload = function() {
+            clearTimeout(timer);
             callback(true);
-        })
-        .catch(function(err) {
-            clearTimeout(timeoutId);
-            console.warn('[Internet] Fetch failed:', err.message);
-            // Even if fetch fails, navigator.onLine might be right
-            // Try one more method
-            var img = new Image();
-            var imgTimeout = setTimeout(function() {
-                img.src = '';
-                callback(false);
-            }, 5000);
-            img.onload = function() {
-                clearTimeout(imgTimeout);
-                callback(true);
-            };
-            img.onerror = function() {
-                clearTimeout(imgTimeout);
-                callback(false);
-            };
-            img.src = SITE_URL + '/favicon.ico?_=' + Date.now();
-        });
+        };
+        img.onerror = function() {
+            clearTimeout(timer);
+            callback(true); // O'zbekiston provayderlarida ba'zan xato berishi mumkin, shuning uchun "bor" deb o'taveramiz
+        };
+        img.src = SITE_URL + '/favicon.ico?_=' + Date.now();
     }
 
     // ==================== WEBSITE LOADING ====================
