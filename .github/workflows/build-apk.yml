@@ -27,19 +27,15 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
     
-    - name: Install Android SDK Components
-      run: |
-        sdkmanager "platforms;android-35" "platforms;android-36" "build-tools;35.0.0" "build-tools;36.0.0-rc1" --verbose
-        
     - name: Accept Android Licenses
       run: yes | sdkmanager --licenses || true
 
     - name: Install Cordova
       run: npm install -g cordova
 
-    - name: Prepare Cordova
+    - name: Prepare Cordova Project
       run: |
-        cordova platform add android --no-fetch
+        cordova platform add android@13.0.0
         cordova plugin add cordova-plugin-network-information
         cordova plugin add cordova-plugin-camera
         cordova plugin add cordova-plugin-media-capture
@@ -48,7 +44,7 @@ jobs:
         cordova plugin add cordova-plugin-android-permissions
     
     - name: Build Debug APK
-      run: cordova build android --debug --device
+      run: cordova build android --debug
     
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
