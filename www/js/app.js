@@ -124,7 +124,7 @@
             return;
         }
 
-        var options = "location=no,zoom=no,pullToRefresh=yes,clearcache=no,clearsessioncache=no,shouldPauseOnSuspend=yes,hidenavigationbuttons=yes,hardwareback=yes";
+        var options = "location=no,zoom=no,pullToRefresh=yes,clearcache=no,clearsessioncache=no,shouldPauseOnSuspend=yes,hidenavigationbuttons=yes,hardwareback=yes,useWideViewPort=yes,loadWithOverviewMode=yes";
         
         browserInstance = cordova.InAppBrowser.open(SITE_URL, '_blank', options);
 

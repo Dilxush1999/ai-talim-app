@@ -23,7 +23,7 @@
     <preference name="SplashScreenDelay" value="0" />
     <preference name="AutoHideSplashScreen" value="true" />
     <preference name="AllowUniversalAccessFromFileURLs" value="true" />
-    <preference name="DisallowOverscroll" value="true" />
+    <preference name="DisallowOverscroll" value="false" />
     <preference name="KeepRunning" value="true" />
     <preference name="LoadUrlTimeoutValue" value="30000" />
     <preference name="AllowInlineMediaPlayback" value="true" />
