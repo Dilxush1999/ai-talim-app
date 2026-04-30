@@ -13,10 +13,12 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "devDependencies": {
-    "cordova-android": "^15.0.0",
+    "cordova-android": "^13.0.0",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-camera": "^8.0.0",
+    "cordova-plugin-device": "^3.0.0",
     "cordova-plugin-file": "^8.1.3",
+    "cordova-plugin-inappbrowser": "^6.0.0",
     "cordova-plugin-media-capture": "^6.0.0",
     "cordova-plugin-network-information": "^3.0.0",
     "cordova-plugin-statusbar": "^4.0.0"
@@ -41,7 +43,9 @@
       },
       "cordova-plugin-android-permissions": {
         "ANDROIDX_CORE_VERSION": "1.6.+"
-      }
+      },
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-device": {}
     }
   }
 }

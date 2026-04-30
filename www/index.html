@@ -2,6 +2,7 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; media-src *; img-src 'self' data: content: https:; connect-src *;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>AI Ta'lim</title>
     <link rel="stylesheet" href="css/style.css">
@@ -34,19 +35,35 @@
     <div id="no-internet-screen" class="screen error-screen">
         <div class="error-icon-wrap">
             <div class="error-icon no-wifi">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="wifi-icon">
                     <line x1="1" y1="1" x2="23" y2="23"></line>
                     <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
                     <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
                     <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
                     <line x1="12" y1="20" x2="12.01" y2="20"></line>
                 </svg>
+                <div class="error-icon-pulse"></div>
             </div>
         </div>
-        <h2 class="error-title">Internet aloqasi mavjud emas</h2>
-        <button class="btn btn-primary" onclick="retryConnection()">
-            🔄 Qayta urinish
+        <h2 class="error-title">Internet aloqasi yo'q</h2>
+        <p class="error-description">Iltimos, internetga ulanishni tekshiring va qayta urinib ko'ring.</p>
+        <button id="retry-btn" class="btn btn-primary" onclick="retryConnection()">
+            <span class="btn-spinner"></span>
+            <span class="btn-text">🔄 Qayta urinish</span>
         </button>
+    </div>
+
+    <!-- EXIT DIALOG -->
+    <div id="exit-dialog" class="dialog-overlay">
+        <div class="dialog-card">
+            <div class="dialog-icon">🚪</div>
+            <h3 class="dialog-title">Chiqish</h3>
+            <p class="dialog-text">Ilovadan chiqishni xohlaysizmi?</p>
+            <div class="dialog-buttons">
+                <button class="btn btn-secondary" onclick="closeExitDialog()">Yo'q</button>
+                <button class="btn btn-danger" onclick="navigator.app.exitApp()">Ha, chiqish</button>
+            </div>
+        </div>
     </div>
 
     <script src="cordova.js"></script>
