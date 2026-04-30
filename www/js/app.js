@@ -143,18 +143,17 @@
     }
 
     function onBackKeyDown(e) {
-        if (browserInstance) {
-            // Agar InAppBrowser ochiq bo'lsa, undan orqaga qaytishga harakat qilamiz
-            browserInstance.executeScript({ code: "window.history.back()" });
+        // Agar InAppBrowser ochiq bo'lsa, bu listener odatda ishlamaydi (plugin o'zi boshqaradi).
+        // Lekin xavfsizlik uchun tekshiramiz.
+        if (browserInstance) return;
+
+        // Agar exit dialog ochiq bo'lsa, uni yopamiz
+        const exitDialog = document.getElementById('exit-dialog');
+        if (exitDialog && exitDialog.classList.contains('active')) {
+            window.closeExitDialog();
         } else {
-            // Agar exit dialog ochiq bo'lsa, uni yopamiz
-            const exitDialog = document.getElementById('exit-dialog');
-            if (exitDialog && exitDialog.classList.contains('active')) {
-                window.closeExitDialog();
-            } else {
-                // Aks holda exit dialogni ko'rsatamiz
-                openExitDialog();
-            }
+            // Aks holda exit dialogni ko'rsatamiz
+            openExitDialog();
         }
     }
 
