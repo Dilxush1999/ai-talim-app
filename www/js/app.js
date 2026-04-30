@@ -17,12 +17,12 @@
         
         // Status bar sozlamalari
         if (window.StatusBar) {
-            StatusBar.backgroundColorByHexString('#5b58e7');
+            StatusBar.overlaysWebView(true);
             StatusBar.styleLightContent();
         }
 
         if (navigator.splashscreen) {
-            // Native splashscreen'ni yashiramiz, bizda o'zimizniki bor index.html'da
+            // Native splashscreen'ni yashiramiz
             navigator.splashscreen.hide();
         }
 
@@ -42,7 +42,7 @@
     }
 
     function checkConnection() {
-        if (!navigator.connection) return true; // Plugin yo'q bo'lsa true qaytaramiz
+        if (!navigator.connection) return true; 
         var networkState = navigator.connection.type;
         return networkState !== Connection.NONE;
     }
@@ -70,11 +70,10 @@
                 });
             } else {
                 if (btn) btn.classList.remove('btn-loading');
-                // Animatsiya effekti uchun
                 const errorIcon = document.querySelector('.error-icon');
                 if (errorIcon) {
                     errorIcon.style.animation = 'none';
-                    errorIcon.offsetHeight; // trigger reflow
+                    errorIcon.offsetHeight; 
                     errorIcon.style.animation = 'wifiShake 0.5s ease-in-out';
                 }
             }
@@ -83,6 +82,10 @@
 
     window.closeExitDialog = function() {
         document.getElementById('exit-dialog').classList.remove('active');
+        // Agar browserInstance null bo'lsa (exit bo'lgan), qayta ochamiz
+        if (!browserInstance) {
+            openWebsite();
+        }
     };
 
     function openExitDialog() {
