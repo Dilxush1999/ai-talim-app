@@ -17,8 +17,10 @@
         
         // Status bar sozlamalari
         if (window.StatusBar) {
-            StatusBar.overlaysWebView(true);
+            StatusBar.overlaysWebView(false);
+            StatusBar.backgroundColorByHexString('#5b58e7');
             StatusBar.styleLightContent();
+            StatusBar.show();
         }
 
         if (navigator.splashscreen) {
