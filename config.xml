@@ -17,7 +17,7 @@
     <allow-intent href="*" />
 
     <!-- Umumiy sozlamalar -->
-    <preference name="Fullscreen" value="false" />
+    <preference name="Fullscreen" value="true" />
     <preference name="Orientation" value="portrait" />
     <preference name="BackgroundColor" value="#0f172a" />
     <preference name="SplashScreenDelay" value="0" />

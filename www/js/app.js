@@ -15,12 +15,9 @@
     function onDeviceReady() {
         console.log('[AI Ta\'lim] Device ready');
         
-        // Status bar sozlamalari
+        // Status bar yashirish (Fullscreen)
         if (window.StatusBar) {
-            StatusBar.overlaysWebView(true);
-            StatusBar.backgroundColorByHexString('#00000000');
-            StatusBar.styleLightContent();
-            StatusBar.show();
+            StatusBar.hide();
         }
 
         if (navigator.splashscreen) {
