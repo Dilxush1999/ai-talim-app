@@ -38,8 +38,8 @@
         <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/icon/android/xxxhdpi.png" />
         <preference name="AndroidWindowSplashScreenBackground" value="#0f172a" />
         <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#0f172a" />
-        <preference name="StatusBarOverlaysWebView" value="false" />
-        <preference name="StatusBarBackgroundColor" value="#5b58e7" />
+        <preference name="StatusBarOverlaysWebView" value="true" />
+        <preference name="StatusBarBackgroundColor" value="#00000000" />
         <preference name="StatusBarStyle" value="lightcontent" />
         <preference name="NavigationBarBackgroundColor" value="#0f172a" />
 
